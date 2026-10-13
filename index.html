@@ -3,20 +3,74 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cat Photo Gallery</title>
+  <title>Mochi — Pocket Cat</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>🐱 Cute Cat Photo Gallery 🐱</h1>
-  </header>
-
-  <div class="controls">
-    <button id="refresh">🔄 Refresh Cats</button>
+  <div class="sky" id="sky">
+    <div class="sun-moon" id="sunMoon"></div>
   </div>
 
-  <div class="gallery" id="gallery"></div>
+  <main class="app">
+    <header class="top">
+      <div class="name-wrap">
+        <input id="catName" class="cat-name" maxlength="16" spellcheck="false" aria-label="Cat name" />
+        <span class="level" id="level">Lv 1</span>
+      </div>
+      <div class="xp-bar" aria-label="Experience"><div class="xp-fill" id="xpFill"></div></div>
+    </header>
 
-  <script src="script.js"></script>
+    <section class="stats">
+      <div class="stat" data-stat="hunger"><span class="icon">🍣</span><div class="bar"><div class="fill"></div></div></div>
+      <div class="stat" data-stat="fun"><span class="icon">🧶</span><div class="bar"><div class="fill"></div></div></div>
+      <div class="stat" data-stat="energy"><span class="icon">⚡</span><div class="bar"><div class="fill"></div></div></div>
+      <div class="stat" data-stat="clean"><span class="icon">🫧</span><div class="bar"><div class="fill"></div></div></div>
+    </section>
+
+    <section class="stage" id="stage">
+      <div class="bubble" id="bubble">hi bestie</div>
+
+      <div class="cat" id="cat" role="button" aria-label="Pet the cat" tabindex="0">
+        <div class="tail"></div>
+        <div class="body">
+          <div class="belly"></div>
+          <div class="paw left"></div>
+          <div class="paw right"></div>
+        </div>
+        <div class="head">
+          <div class="ear left"><div class="inner"></div></div>
+          <div class="ear right"><div class="inner"></div></div>
+          <div class="eye left"><div class="pupil"></div></div>
+          <div class="eye right"><div class="pupil"></div></div>
+          <div class="blush left"></div>
+          <div class="blush right"></div>
+          <div class="nose"></div>
+          <div class="mouth"></div>
+          <div class="whiskers left"><i></i><i></i></div>
+          <div class="whiskers right"><i></i><i></i></div>
+        </div>
+        <div class="dirt"></div>
+      </div>
+
+      <div class="zzz" id="zzz"><span>z</span><span>z</span><span>Z</span></div>
+      <div class="laser" id="laser" hidden></div>
+      <div class="floor"></div>
+    </section>
+
+    <nav class="actions">
+      <button data-action="feed"><span>🐟</span>Feed</button>
+      <button data-action="play"><span>🔴</span>Laser</button>
+      <button data-action="nap"><span>😴</span>Nap</button>
+      <button data-action="bath"><span>🛁</span>Bath</button>
+    </nav>
+
+    <footer class="foot">
+      <span id="tip">tip: pet them. pet them a lot.</span>
+      <button class="sound" id="soundBtn" aria-label="Toggle sound">🔊</button>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
 </body>
 </html>
