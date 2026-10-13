@@ -24,6 +24,8 @@ html, body {
   font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
   color: var(--ink);
   -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+  touch-action: manipulation;
 }
 
 body {
@@ -97,7 +99,7 @@ body.night .stage { background: radial-gradient(circle at 50% 30%, #e9e4ff, #c9b
 body.night .floor { background: #a99be0; }
 
 .bubble {
-  position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+  position: absolute; bottom: 252px; left: 50%; transform: translateX(-50%);
   background: white; padding: 8px 14px; border-radius: 16px;
   font-weight: 700; white-space: nowrap; z-index: 5;
   box-shadow: 0 4px 12px rgba(0,0,0,.08);
@@ -240,7 +242,7 @@ body.night .floor { background: #a99be0; }
 }
 
 /* ---------- effects ---------- */
-.zzz { position: absolute; top: 70px; left: 62%; font-weight: 900; color: var(--accent); opacity: 0; z-index: 4; }
+.zzz { position: absolute; bottom: 215px; left: 64%; font-weight: 900; color: var(--accent); opacity: 0; z-index: 4; }
 .zzz span { display: inline-block; animation: float 2s infinite; font-size: 1.4rem; }
 .zzz span:nth-child(2) { animation-delay: .4s; font-size: 1.7rem; }
 .zzz span:nth-child(3) { animation-delay: .8s; font-size: 2.1rem; }
@@ -284,6 +286,13 @@ body.sleeping .zzz { opacity: 1; }
 
 .foot { display: flex; align-items: center; justify-content: space-between; font-size: .8rem; opacity: .75; }
 .sound { border: none; background: none; font-size: 1.2rem; cursor: pointer; }
+
+/* Phones: fill the whole screen and give the extra height to the cat's room. */
+@media (max-width: 600px) {
+  body { min-height: 100vh; min-height: 100dvh; }
+  .app { min-height: calc(100vh - 32px); min-height: calc(100dvh - 32px); }
+  .stage { flex: 1 1 auto; min-height: 300px; }
+}
 
 @media (max-width: 380px) {
   body { padding: 8px; }

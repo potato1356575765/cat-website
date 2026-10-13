@@ -210,6 +210,8 @@
   const chime = () => [660, 880, 1320].forEach((f, i) => setTimeout(() => tone([f, f], 0.25), i * 110));
   const blip = () => tone([900, 1400], 0.08, "square", 0.05);
   const purr = () => tone([38, 42, 38], 0.6, "sawtooth", 0.05);
+  // Haptics on phones (silently does nothing elsewhere).
+  const buzz = (ms) => { try { navigator.vibrate?.(ms); } catch {} };
 
   // ---------- actions ----------
   const actions = {
@@ -263,6 +265,7 @@
         e.stopPropagation();
         caught++;
         blip();
+        buzz(25);
         particle(pick(["💥", "✨", "⭐"]), parseFloat(laser.style.left) - 12, parseFloat(laser.style.top) - 20);
         animate("bounce");
         moveLaser();
@@ -337,6 +340,7 @@
     const x = (e.clientX ?? s.left + s.width / 2) - s.left;
     const y = (e.clientY ?? s.top + s.height / 2) - s.top;
     particle(pick(["💖", "💕", "💗", "😻"]), x - 12, y - 20);
+    buzz(12);
     state.fun = clamp(state.fun + 2);
     addXp(1);
     beHappy();
@@ -419,4 +423,17 @@
   setTimeout(() => say(state.sleeping ? "zzz..." : pick([`hi bestie, it's me ${state.name}`, "you're back!! 😸", "missed u fr"])), 300);
   setInterval(tick, TICK_MS);
   window.addEventListener("beforeunload", save);
+
+  // Phones freeze timers in the background, so catch up when the app comes back.
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) return save();
+    const minutesAway = Math.min((Date.now() - state.lastSeen) / 60000, 720);
+    if (minutesAway > 0.1) applyDecay(state, minutesAway);
+    render();
+    save();
+  });
+
+  if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  }
 })();

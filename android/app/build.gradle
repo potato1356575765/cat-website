@@ -1,0 +1,41 @@
+plugins {
+    id "com.android.application"
+}
+
+android {
+    namespace "com.mochi.pocketcat"
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.mochi.pocketcat"
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+// The web app at the repo root is the single source of truth:
+// copy it into the APK's assets on every build.
+def webOut = layout.buildDirectory.dir("generated/webassets")
+
+def copyWeb = tasks.register("copyWeb", Copy) {
+    from(rootProject.file("..")) {
+        include "index.html", "style.css", "app.js", "manifest.webmanifest", "icons/**"
+    }
+    into webOut.map { it.dir("www") }
+}
+
+android.sourceSets.main.assets.srcDir(webOut)
+tasks.named("preBuild") { dependsOn copyWeb }
